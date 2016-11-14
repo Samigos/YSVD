@@ -3,9 +3,6 @@
 #include "BF.h"
 #include "exhash.h"
 
-#define HT "HT"
-#define ET "ET"
-
 int EH_CreateIndex(char* fileName, char* attrName, char attrType, int attrLength, int depth) {
     EH_info info;
     void* block;
@@ -23,7 +20,8 @@ int EH_CreateIndex(char* fileName, char* attrName, char attrType, int attrLength
     info.depth = depth;
     
     // -----------------------------------------
-    // ftiakse block gia plirofories
+    // Store the EH struct for type of file
+    // recognition.
     
     if (BF_AllocateBlock(info.fileDesc) < 0)
         return -1;
@@ -42,7 +40,7 @@ int EH_CreateIndex(char* fileName, char* attrName, char attrType, int attrLength
     if (BF_AllocateBlock(info.fileDesc) < 0)
         return -1;
     
-    // ftiakse upoloia blocks
+    // ftiakse upoloipa blocks
     // stin arxi enas int me posses eggrafes,
     // meta int me deixti ston kado uperxeilisis,
     // mpenoun oi eggrafes
@@ -72,7 +70,7 @@ int EH_CreateIndex(char* fileName, char* attrName, char attrType, int attrLength
     
     index = malloc(calc_depth(info.depth) * sizeof(int));
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < calc_depth(info.depth); i++)
         index[i] = i + 2;
     
     memcpy(block, index, calc_depth(info.depth) * sizeof(int));
